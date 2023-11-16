@@ -14,11 +14,20 @@ config/name="RPG-Test"
 run/main_scene="res://places/exteriors/level_test.tscn"
 config/features=PackedStringArray("4.1", "Forward Plus")
 
+[autoload]
+
+DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
+DialogState="*res://autoloads/dialog_state/dialog_state.tscn"
+
 [display]
 
 window/size/viewport_width=640
 window/size/viewport_height=360
 window/stretch/mode="viewport"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/dialogue_manager/plugin.cfg")
 
 [input]
 
@@ -35,6 +44,7 @@ attack={
 2d_physics/layer_3="hitbox_enemy"
 2d_physics/layer_4="hurtbox_friendly"
 2d_physics/layer_5="hurtbox_enemy"
+2d_physics/layer_6="actionable"
 
 [rendering]
 

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://kqq5cxvvf724"]
+
+[ext_resource type="Script" path="res://autoloads/dialog_state/dialog_state.gd" id="1_oxfrq"]
+
+[node name="DialogState" type="Node"]
+script = ExtResource("1_oxfrq")

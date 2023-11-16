@@ -1,0 +1,73 @@
+[gd_scene load_steps=8 format=3 uid="uid://dln04wi16fwnk"]
+
+[ext_resource type="Script" path="res://UI/dialog_box.gd" id="1_c1vjd"]
+[ext_resource type="Texture2D" uid="uid://bggbvto7x6e70" path="res://art/UI/dialog.png" id="1_ttpxv"]
+[ext_resource type="Texture2D" uid="uid://dw6h2l7kjoywb" path="res://art/UI/Hari.png" id="2_538gx"]
+[ext_resource type="Script" path="res://addons/dialogue_manager/dialogue_label.gd" id="2_bnj4c"]
+[ext_resource type="Shader" path="res://UI/dialog_box.gdshader" id="3_qbvpc"]
+[ext_resource type="Script" path="res://addons/dialogue_manager/dialogue_reponses_menu.gd" id="3_yocma"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7d1fq"]
+shader = ExtResource("3_qbvpc")
+shader_parameter/mod_color = Color(0.5, 0.5, 0, 1)
+
+[node name="dialog_box" type="CanvasLayer"]
+layer = 100
+offset = Vector2(320, 550)
+transform = Transform2D(1, 0, 0, 1, 320, 550)
+follow_viewport_enabled = true
+script = ExtResource("1_c1vjd")
+portrait = ExtResource("2_538gx")
+mod_color = Color(0.788235, 0.423529, 0.0588235, 1)
+
+[node name="Box" type="NinePatchRect" parent="."]
+material = SubResource("ShaderMaterial_7d1fq")
+offset_right = 584.0
+offset_bottom = 145.0
+texture = ExtResource("1_ttpxv")
+patch_margin_left = 6
+patch_margin_top = 6
+patch_margin_right = 6
+patch_margin_bottom = 6
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Box"]
+layout_mode = 0
+offset_top = 3.0
+offset_right = 584.0
+offset_bottom = 144.0
+
+[node name="Portrait" type="Control" parent="Box/HBoxContainer"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="Box/HBoxContainer/Portrait"]
+position = Vector2(64, 64)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Box/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Name" type="RichTextLabel" parent="Box/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+text = "Hariman"
+scroll_active = false
+
+[node name="DialogueLabel" type="RichTextLabel" parent="Box/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Why are you gae ? I am not gae. You are gae. I can keep writing a lot of text and it works out just fine my friend !"
+script = ExtResource("2_bnj4c")
+
+[node name="DialogueResponsesMenu" type="VBoxContainer" parent="Box"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 232.0
+offset_top = -95.0
+offset_right = 584.0
+script = ExtResource("3_yocma")
+
+[connection signal="gui_input" from="Box" to="." method="_on_balloon_gui_input"]
+[connection signal="focus_entered" from="Box/DialogueResponsesMenu" to="." method="_on_dialogue_responses_menu_focus_entered"]
+[connection signal="response_selected" from="Box/DialogueResponsesMenu" to="." method="_on_responses_menu_response_selected"]

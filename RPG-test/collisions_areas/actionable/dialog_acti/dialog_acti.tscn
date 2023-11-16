@@ -1,0 +1,18 @@
+[gd_scene load_steps=5 format=3 uid="uid://4doa3dic4w7q"]
+
+[ext_resource type="PackedScene" uid="uid://c0sfahlhy56p8" path="res://collisions_areas/actionable/actionable.tscn" id="1_pq6ii"]
+[ext_resource type="Script" path="res://collisions_areas/actionable/dialog_acti/dialog_acti.gd" id="2_s8ryv"]
+[ext_resource type="Script" path="res://addons/dialogue_manager/dialogue_resource.gd" id="3_fkgxr"]
+
+[sub_resource type="Resource" id="Resource_spf4n"]
+script = ExtResource("3_fkgxr")
+using_states = []
+titles = {}
+character_names = []
+first_title = ""
+lines = {}
+
+[node name="DialogActi" instance=ExtResource("1_pq6ii")]
+script = ExtResource("2_s8ryv")
+dialog = SubResource("Resource_spf4n")
+dialog_start = "start"
