@@ -1,14 +1,20 @@
 extends CanvasLayer
 
+
 @onready var balloon: NinePatchRect = $Box
-@export var portrait: Texture2D 
-@export var mod_color:Color = Color(1.0, 0.0, 0.0) # Default to red
 @onready var character_portrait: Sprite2D = $Box/HBoxContainer/Portrait/Sprite2D
-@onready var character_label: RichTextLabel = $Box/HBoxContainer/VBoxContainer/Name
+@onready var character_label: RichTextLabel = %Name
 @onready var dialogue_label: DialogueLabel = $Box/HBoxContainer/VBoxContainer/DialogueLabel
 @onready var responses_menu: VBoxContainer = $Box/DialogueResponsesMenu
 @onready var material: ShaderMaterial=  $Box.material
 
+ # Default to red to signal something is wrong
+var mod_color:Color = Color(1.0, 0.0, 0.0) :
+	set(color):
+		mod_color=color
+		material.set_shader_parameter('mod_color',mod_color)
+	get:
+		return mod_color
 
 ## The dialogue resource
 var resource: DialogueResource
@@ -33,12 +39,14 @@ var dialogue_line: DialogueLine:
 			return
 
 		dialogue_line = next_dialogue_line
-
 		character_label.visible = not dialogue_line.character.is_empty()
 		character_label.text = dialogue_line.character
 		
+		var style = DialogState.box_style[dialogue_line.character.to_lower()]
 		# SET THE CHARACTER PORTRAIT HERE ALSO
-		
+		character_portrait.texture = style['portrait']
+		mod_color=style['color']
+		print(character_label.text, ' color : ', mod_color)
 		dialogue_label.hide()
 		dialogue_label.dialogue_line = dialogue_line
 
@@ -72,7 +80,6 @@ var dialogue_line: DialogueLine:
 
 
 func _ready() -> void:
-	character_portrait.texture = portrait
 	material.set_shader_parameter('mod_color',mod_color)
 #	balloon.hide()
 	Engine.get_singleton("DialogueManager").mutated.connect(_on_mutated)

@@ -1,5 +1,5 @@
 extends Actionable
-
+class_name DialogActi
 
 """
 Dialog actionable. Launches dialog when action is called
@@ -14,9 +14,4 @@ func action():
 	add_child(ball)
 	
 	ball.start(dialog,dialog_start)
-
-func _process(delta):
-	## FOR DEBUGGING !!!
-	if Input.is_action_just_pressed("attack"):
-		action()
 

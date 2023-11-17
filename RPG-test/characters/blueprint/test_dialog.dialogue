@@ -1,0 +1,13 @@
+~ nigga
+
+King: [[Hi|Hello|Howdy]], this is some dialogue.
+King: Here are some choices.
+- First one
+	King: You picked the first one.
+- Second one
+	King: You picked the second one.
+- Start again => nigga
+- End the conversation => END
+Shaquaneela: I am Shaquaneela bitch !
+King: Shut the fuck up Shaquaneela.
+=> END

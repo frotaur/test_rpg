@@ -1,8 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://dln04wi16fwnk"]
+[gd_scene load_steps=7 format=3 uid="uid://dln04wi16fwnk"]
 
 [ext_resource type="Script" path="res://UI/dialog_box.gd" id="1_c1vjd"]
 [ext_resource type="Texture2D" uid="uid://bggbvto7x6e70" path="res://art/UI/dialog.png" id="1_ttpxv"]
-[ext_resource type="Texture2D" uid="uid://dw6h2l7kjoywb" path="res://art/UI/Hari.png" id="2_538gx"]
 [ext_resource type="Script" path="res://addons/dialogue_manager/dialogue_label.gd" id="2_bnj4c"]
 [ext_resource type="Shader" path="res://UI/dialog_box.gdshader" id="3_qbvpc"]
 [ext_resource type="Script" path="res://addons/dialogue_manager/dialogue_reponses_menu.gd" id="3_yocma"]
@@ -13,12 +12,10 @@ shader_parameter/mod_color = Color(0.5, 0.5, 0, 1)
 
 [node name="dialog_box" type="CanvasLayer"]
 layer = 100
-offset = Vector2(320, 550)
-transform = Transform2D(1, 0, 0, 1, 320, 550)
+offset = Vector2(25, 200)
+transform = Transform2D(1, 0, 0, 1, 25, 200)
 follow_viewport_enabled = true
 script = ExtResource("1_c1vjd")
-portrait = ExtResource("2_538gx")
-mod_color = Color(0.788235, 0.423529, 0.0588235, 1)
 
 [node name="Box" type="NinePatchRect" parent="."]
 material = SubResource("ShaderMaterial_7d1fq")
@@ -48,6 +45,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="Name" type="RichTextLabel" parent="Box/HBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 25)
 layout_mode = 2
 text = "Hariman"

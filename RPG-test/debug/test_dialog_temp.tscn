@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://b7d4i62kfbcdk"]
+
+[ext_resource type="Script" path="res://debug/test_dialog_temp.gd" id="1_800t6"]
+[ext_resource type="Resource" uid="uid://c34hfnb8jwmqd" path="res://characters/blueprint/test_dialog.dialogue" id="2_h3jgr"]
+
+[node name="TestScene" type="Node2D"]
+script = ExtResource("1_800t6")
+resource = ExtResource("2_h3jgr")

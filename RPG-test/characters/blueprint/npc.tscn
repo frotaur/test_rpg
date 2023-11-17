@@ -1,7 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://t3orauukdhn2"]
+[gd_scene load_steps=14 format=3 uid="uid://t3orauukdhn2"]
 
 [ext_resource type="Script" path="res://characters/blueprint/NPC.gd" id="1_oivue"]
 [ext_resource type="Texture2D" uid="uid://b2s4a4iy32ci2" path="res://art/characters/NPC/King.png" id="2_mhxcv"]
+[ext_resource type="Resource" uid="uid://c34hfnb8jwmqd" path="res://characters/blueprint/test_dialog.dialogue" id="2_utj04"]
+[ext_resource type="Texture2D" uid="uid://dw6h2l7kjoywb" path="res://art/UI/Hari.png" id="3_kjqpw"]
+[ext_resource type="PackedScene" uid="uid://4doa3dic4w7q" path="res://collisions_areas/actionable/dialog_acti/dialog_acti.tscn" id="3_qb08q"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bcxij"]
 radius = 5.0
@@ -119,7 +122,11 @@ _data = {
 [node name="NPC" type="CharacterBody2D"]
 y_sort_enabled = true
 script = ExtResource("1_oivue")
-dialog_start = null
+dialog = ExtResource("2_utj04")
+dialog_start = "nigga"
+the_name = "Shaquaneela"
+portrait = ExtResource("3_kjqpw")
+color = Color(0.247059, 0.337255, 0.109804, 1)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_mhxcv")
@@ -135,3 +142,6 @@ shape = SubResource("CapsuleShape2D_bcxij")
 libraries = {
 "": SubResource("AnimationLibrary_exaeg")
 }
+
+[node name="DialogActi" parent="." instance=ExtResource("3_qb08q")]
+unique_name_in_owner = true
