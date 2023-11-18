@@ -13,5 +13,6 @@ func action():
 	var ball = DialogState.balloon.instantiate()
 	add_child(ball)
 	
+	DialogState.talking=true
 	ball.start(dialog,dialog_start)
 

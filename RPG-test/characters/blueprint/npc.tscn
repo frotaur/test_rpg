@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://t3orauukdhn2"]
+[gd_scene load_steps=15 format=3 uid="uid://t3orauukdhn2"]
 
 [ext_resource type="Script" path="res://characters/blueprint/NPC.gd" id="1_oivue"]
 [ext_resource type="Texture2D" uid="uid://b2s4a4iy32ci2" path="res://art/characters/NPC/King.png" id="2_mhxcv"]
@@ -119,6 +119,9 @@ _data = {
 "walk_w": SubResource("Animation_ahrlb")
 }
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qnby7"]
+size = Vector2(20, 25)
+
 [node name="NPC" type="CharacterBody2D"]
 y_sort_enabled = true
 script = ExtResource("1_oivue")
@@ -145,3 +148,9 @@ libraries = {
 
 [node name="DialogActi" parent="." instance=ExtResource("3_qb08q")]
 unique_name_in_owner = true
+
+[node name="CollisionShape2D" parent="DialogActi" index="0"]
+position = Vector2(0, 1.5)
+shape = SubResource("RectangleShape2D_qnby7")
+
+[editable path="DialogActi"]

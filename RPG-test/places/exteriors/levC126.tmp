@@ -1,13 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://durc3fr2asbkb"]
+[gd_scene load_steps=4 format=3 uid="uid://durc3fr2asbkb"]
 
-[ext_resource type="Script" path="res://places/exteriors/level_test.gd" id="1_0n2v8"]
 [ext_resource type="PackedScene" uid="uid://d27npwe1ax2ek" path="res://tiles/terrains.tscn" id="1_sqgyn"]
 [ext_resource type="PackedScene" uid="uid://df1qpy7t81j4" path="res://player/player.tscn" id="2_c5pjn"]
 [ext_resource type="PackedScene" uid="uid://t3orauukdhn2" path="res://characters/blueprint/npc.tscn" id="3_siwob"]
 
 [node name="LevelTest" type="Node2D"]
 y_sort_enabled = true
-script = ExtResource("1_0n2v8")
 
 [node name="Terrains" parent="." instance=ExtResource("1_sqgyn")]
 z_as_relative = false

@@ -15,9 +15,7 @@ var swing_number = 0
 func _ready():
 	hitbox.damage = damage
 
-func _input(event):
-	if Input.is_action_just_pressed("attack"):
-		attack()
+
 
 
 func attack():
