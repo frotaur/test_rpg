@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://cjg8duhky40rx" path="res://weapons_spells/weapon/weapon.tscn" id="3_rvaq2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_b7l4w"]
-size = Vector2(15, 18)
+size = Vector2(13, 14)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_edbmf"]
 size = Vector2(16, 18)
@@ -46,7 +46,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [10]
+"values": [1]
 }
 
 [sub_resource type="Animation" id="Animation_10rs1"]
@@ -479,6 +479,7 @@ collision_mask = 32
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hand/Interactor"]
+position = Vector2(0, -1)
 shape = SubResource("RectangleShape2D_b7l4w")
 debug_color = Color(0.666667, 0.509804, 0, 0.419608)
 
@@ -487,7 +488,7 @@ y_sort_enabled = true
 texture = ExtResource("1_5fscu")
 hframes = 3
 vframes = 5
-frame = 10
+frame = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false

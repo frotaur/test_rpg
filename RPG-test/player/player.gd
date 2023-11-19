@@ -1,5 +1,6 @@
 extends CharacterBody2D
 
+class_name Player
 
 @export var SPEED = 300.0
 @export var CAM_ADVANCE = 8.
@@ -37,7 +38,7 @@ func _input(event):
 			# For now, interact with the first
 			var can_interact = (potentials_interact.size()>0) and potentials_interact[0].has_method("action")
 			if(can_interact):
-				potentials_interact[0].action()
+				potentials_interact[0].action(self)
 		if Input.is_action_just_pressed("attack"):
 			weapon.attack()
 	move_camera()

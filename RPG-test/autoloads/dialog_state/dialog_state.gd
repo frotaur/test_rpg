@@ -23,5 +23,4 @@ func add_character(the_name:String,portrait:Texture2D, color:Color):
 	box_style[the_name.to_lower()]= {'portrait':portrait,'color':color}
 	
 func _on_dialogue_end(resource):
-	print("I END YOU")
 	talking=false

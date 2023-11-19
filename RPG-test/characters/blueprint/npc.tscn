@@ -1,14 +1,18 @@
-[gd_scene load_steps=15 format=3 uid="uid://t3orauukdhn2"]
+[gd_scene load_steps=36 format=3 uid="uid://t3orauukdhn2"]
 
-[ext_resource type="Script" path="res://characters/blueprint/NPC.gd" id="1_oivue"]
+[ext_resource type="Script" path="res://characters/blueprint/npc.gd" id="1_476d3"]
 [ext_resource type="Texture2D" uid="uid://b2s4a4iy32ci2" path="res://art/characters/NPC/King.png" id="2_mhxcv"]
-[ext_resource type="Resource" uid="uid://c34hfnb8jwmqd" path="res://characters/blueprint/test_dialog.dialogue" id="2_utj04"]
-[ext_resource type="Texture2D" uid="uid://dw6h2l7kjoywb" path="res://art/UI/Hari.png" id="3_kjqpw"]
+[ext_resource type="Resource" uid="uid://c34hfnb8jwmqd" path="res://characters/blueprint/test_dialog.dialogue" id="2_qm30f"]
+[ext_resource type="Texture2D" uid="uid://dw6h2l7kjoywb" path="res://art/UI/Hari.png" id="3_bcf7q"]
 [ext_resource type="PackedScene" uid="uid://4doa3dic4w7q" path="res://collisions_areas/actionable/dialog_acti/dialog_acti.tscn" id="3_qb08q"]
+[ext_resource type="Script" path="res://abstract/state_machine/state_machine.gd" id="6_5flap"]
+[ext_resource type="Script" path="res://characters/blueprint/states/walking.gd" id="7_vyvha"]
+[ext_resource type="Script" path="res://characters/blueprint/states/stopped.gd" id="8_0s4jf"]
+[ext_resource type="Script" path="res://characters/blueprint/states/talking.gd" id="9_482j8"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bcxij"]
-radius = 5.0
-height = 16.0
+radius = 6.0
+height = 22.0
 
 [sub_resource type="Animation" id="Animation_p8f7h"]
 length = 0.001
@@ -25,9 +29,44 @@ tracks/0/keys = {
 "values": [0]
 }
 
+[sub_resource type="Animation" id="Animation_s82r5"]
+resource_name = "idle_e"
+length = 0.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [7]
+}
+
+[sub_resource type="Animation" id="Animation_hriea"]
+resource_name = "idle_n"
+length = 0.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [10]
+}
+
 [sub_resource type="Animation" id="Animation_cxv0h"]
 resource_name = "idle"
 length = 0.5
+loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -41,9 +80,27 @@ tracks/0/keys = {
 "values": [1]
 }
 
+[sub_resource type="Animation" id="Animation_vomp3"]
+resource_name = "idle_w"
+length = 0.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.1),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [5]
+}
+
 [sub_resource type="Animation" id="Animation_s3ped"]
 resource_name = "walk_e"
 length = 0.6
+loop_mode = 1
 step = 0.2
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -78,6 +135,7 @@ tracks/0/keys = {
 [sub_resource type="Animation" id="Animation_ome7p"]
 resource_name = "walk_s"
 length = 0.6
+loop_mode = 1
 step = 0.2
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -95,6 +153,7 @@ tracks/0/keys = {
 [sub_resource type="Animation" id="Animation_ahrlb"]
 resource_name = "walk_w"
 length = 0.6
+loop_mode = 1
 step = 0.2
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -112,7 +171,10 @@ tracks/0/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_exaeg"]
 _data = {
 "RESET": SubResource("Animation_p8f7h"),
-"idle": SubResource("Animation_cxv0h"),
+"idle_e": SubResource("Animation_s82r5"),
+"idle_n": SubResource("Animation_hriea"),
+"idle_s": SubResource("Animation_cxv0h"),
+"idle_w": SubResource("Animation_vomp3"),
 "walk_e": SubResource("Animation_s3ped"),
 "walk_n": SubResource("Animation_137oh"),
 "walk_s": SubResource("Animation_ome7p"),
@@ -122,22 +184,87 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qnby7"]
 size = Vector2(20, 25)
 
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_hdita"]
+animation = &"idle_w"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_d3srk"]
+animation = &"idle_e"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_rc3uw"]
+animation = &"idle_n"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_hqal0"]
+animation = &"idle_s"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_vr3u3"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_hdita")
+blend_point_0/pos = Vector2(-1, 0)
+blend_point_1/node = SubResource("AnimationNodeAnimation_d3srk")
+blend_point_1/pos = Vector2(1, 0)
+blend_point_2/node = SubResource("AnimationNodeAnimation_rc3uw")
+blend_point_2/pos = Vector2(0, -1)
+blend_point_3/node = SubResource("AnimationNodeAnimation_hqal0")
+blend_point_3/pos = Vector2(0, 1)
+min_space = Vector2(-1, -1.1)
+max_space = Vector2(1, 1.2)
+blend_mode = 1
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_k83gi"]
+animation = &"walk_w"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_usvwx"]
+animation = &"walk_e"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_b6v8p"]
+animation = &"walk_s"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_d5shr"]
+animation = &"walk_n"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_av88v"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_k83gi")
+blend_point_0/pos = Vector2(-1, 0)
+blend_point_1/node = SubResource("AnimationNodeAnimation_usvwx")
+blend_point_1/pos = Vector2(1, 0)
+blend_point_2/node = SubResource("AnimationNodeAnimation_b6v8p")
+blend_point_2/pos = Vector2(0, 1.1)
+blend_point_3/node = SubResource("AnimationNodeAnimation_d5shr")
+blend_point_3/pos = Vector2(0, -1.1)
+min_space = Vector2(-1, -1.1)
+max_space = Vector2(1, 1.1)
+blend_mode = 1
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_iyru4"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_laakj"]
+advance_mode = 2
+advance_condition = &"is_walking"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_pahg7"]
+advance_mode = 2
+advance_condition = &"is_idle"
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_3n3at"]
+states/End/position = Vector2(878, 114)
+states/Idle/node = SubResource("AnimationNodeBlendSpace2D_vr3u3")
+states/Idle/position = Vector2(380, 100)
+states/Walk/node = SubResource("AnimationNodeBlendSpace2D_av88v")
+states/Walk/position = Vector2(548, 100)
+transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_iyru4"), "Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_laakj"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_pahg7")]
+
 [node name="NPC" type="CharacterBody2D"]
 y_sort_enabled = true
-script = ExtResource("1_oivue")
-dialog = ExtResource("2_utj04")
+script = ExtResource("1_476d3")
+dialog = ExtResource("2_qm30f")
 dialog_start = "nigga"
 the_name = "Shaquaneela"
-portrait = ExtResource("3_kjqpw")
-color = Color(0.247059, 0.337255, 0.109804, 1)
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_mhxcv")
-hframes = 3
-vframes = 4
+portrait = ExtResource("3_bcf7q")
+sprite_texture = ExtResource("2_mhxcv")
+wander_radius = 40.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 11)
+position = Vector2(0, 10)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_bcxij")
 
@@ -148,9 +275,43 @@ libraries = {
 
 [node name="DialogActi" parent="." instance=ExtResource("3_qb08q")]
 unique_name_in_owner = true
+dialog_start = "start"
 
 [node name="CollisionShape2D" parent="DialogActi" index="0"]
 position = Vector2(0, 1.5)
 shape = SubResource("RectangleShape2D_qnby7")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_mhxcv")
+hframes = 3
+vframes = 4
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource("AnimationNodeStateMachine_3n3at")
+anim_player = NodePath("../AnimationPlayer")
+active = true
+parameters/conditions/is_idle = true
+parameters/conditions/is_walking = false
+parameters/Idle/blend_position = Vector2(0, 1)
+parameters/Walk/blend_position = Vector2(0.6, 0.1)
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("6_5flap")
+initial_state = NodePath("Walking")
+
+[node name="Walking" type="Node" parent="StateMachine" node_paths=PackedStringArray("npc")]
+script = ExtResource("7_vyvha")
+npc = NodePath("../..")
+
+[node name="Stopped" type="Node" parent="StateMachine" node_paths=PackedStringArray("npc")]
+script = ExtResource("8_0s4jf")
+npc = NodePath("../..")
+
+[node name="Talking" type="Node" parent="StateMachine" node_paths=PackedStringArray("npc")]
+script = ExtResource("9_482j8")
+npc = NodePath("../..")
+
+[connection signal="actioned" from="DialogActi" to="." method="_on_dialog_acti_actioned"]
+[connection signal="dialog_ended" from="DialogActi" to="StateMachine/Talking" method="_on_dialog_acti_dialog_ended"]
 
 [editable path="DialogActi"]

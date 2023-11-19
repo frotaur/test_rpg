@@ -15,4 +15,4 @@ lines = {}
 [node name="DialogActi" instance=ExtResource("1_pq6ii")]
 script = ExtResource("2_s8ryv")
 dialog = SubResource("Resource_spf4n")
-dialog_start = "start"
+dialog_start = null
